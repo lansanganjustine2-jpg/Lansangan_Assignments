@@ -1,11 +1,11 @@
 <?php
 $products = [
-    ["flavor" => "Vanilla", "stock" => 10],
-    ["flavor" => "Chocolate", "stock" => 5],
-    ["flavor" => "Strawberry", "stock" => 0],
-    ["flavor" => "Avocado", "stock" => 1],
-    ["flavor" => "Cookies & Cream", "stock" => 0],
-    ["flavor" => "Biscoff", "stock" => 5],
-    ["flavor" => "Peanut", "stock" => 2],
+    "Vanilla"        => ["price" => 45.00, "stock" => 10],
+    "Chocolate"      => ["price" => 50.00, "stock" => 5],
+    "Strawberry"     => ["price" => 48.00, "stock" => 0],
+    "Avocado"        => ["price" => 60.00, "stock" => 1],
+    "Cookies & Cream"=> ["price" => 55.00, "stock" => 0],
+    "Biscoff"        => ["price" => 65.00, "stock" => 5],
+    "Peanut"         => ["price" => 40.00, "stock" => 2]
 ];
 ?>

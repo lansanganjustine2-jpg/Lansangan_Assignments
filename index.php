@@ -1,4 +1,5 @@
 <?php 
+declare(strict_types=1);
 include 'data.php';
 
 $storeName = "Ice Cream Shop";
@@ -10,7 +11,20 @@ $msg = ($total > 200) ? "THANK YOU FOR BUYING MANY TREATS!" : "ENJOY YOUR ICE CR
 $pieces = 10;  
 $costPerPiece = 5;     
 $gallonCost = 150; 
+
+function get_reorder_message(int $stock): string {
+    return ($stock < 10) ? "Yes" : "No";
+}
+
+function get_total_value(float $price, int $qty): float {
+    return $price * $qty;
+}
+
+function get_tax_due(float $price, int $qty, int $taxRate = 0): float {
+    return ($price * $qty) * ($taxRate / 100);
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,21 +46,34 @@ $gallonCost = 150;
 
 <!-- AVAILABLE FLAVORS TABLE -->
 <h2>Available Products</h2>
+
 <?php
 if (!empty($products)) {
     echo '<table>';
-    echo '<tr><th scope="col">Flavors</th><th scope="col">Status</th></tr>';
+    echo '<tr>
+            <th>Flavor</th>
+            <th>Status</th>
+            <th>Reorder?</th>
+            <th>Total Value</th>
+            <th>Tax Due</th>
+          </tr>';
 
-    foreach ($products as $p) {
+    foreach ($products as $flavor => $data) {
+        $price = $data['price'];
+        $stock = $data['stock'];
+
         echo '<tr>';
-        echo '<td>' . $p['flavor'] . '</td>';
-        echo '<td>' . ($p['stock'] > 0 ? 'In Stock' : 'Sold Out') . '</td>';
+        echo '<td>' . $flavor . '</td>';
+        echo '<td>' . ($stock > 0 ? 'In Stock' : 'Sold Out') . '</td>';
+        echo '<td>' . get_reorder_message($stock) . '</td>';
+        echo '<td>₱' . number_format(get_total_value($price, $stock), 2) . '</td>';
+        echo '<td>₱' . number_format(get_tax_due($price, $stock, $taxRate), 2) . '</td>';
         echo '</tr>';
     }
 
     echo '</table>';
 } else {
-    echo '<p>No products available at the moment.</p>';
+    echo '<p>No products available.</p>';
 }
 ?>
 
